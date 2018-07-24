@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tituloVista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tit_main_activity"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lblNombreCliente" />
+
+    <EditText
+        android:id="@+id/txtNombreCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:visibility="visible" />
+
+    <EditText
+        android:id="@+id/txtDetallePedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/lblDetallePedido"
+        android:inputType="textMultiLine"
+        android:lines="5" />
+    <Button
+        android:id="@+id/btnAddProducto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="BUSCAR MENU" />
+
+    <RadioGroup
+        android:id="@+id/rbgEnvio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbCasa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/radBtnMesa" />
+
+        <RadioButton
+            android:id="@+id/rbDelivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/radBtnDelivery" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cbIncluirPropina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lbIncluirPropina" />
+
+        <CheckBox
+            android:id="@+id/cbPermitirCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lbPermitirCancelar" />
+
+        <CheckBox
+            android:id="@+id/cbBebidaXL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lbBebidaXL" />
+
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/swtNotifica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/lblNoNotificar"
+        android:textOff="@string/lblNoNotificar"
+        android:textOn="@string/lblNoNotificar" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonPagar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="@string/lbPagarEntrega"
+        android:textOff="@string/lbPagarEntrega"
+        android:textOn="@string/lbPagarEntrega" />
+
+    <LinearLayout
+        android:id="@+id/layoutBotonera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnConfirmar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lbConfirmar" />
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lbCancelar" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetallePedidoActivity">
+
+    <ListView
+        android:id="@+id/listaProductos"
+        android:layout_width="match_parent"
+        android:layout_height="478dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"></ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btnMenosProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="-" />
+
+    <TextView
+        android:id="@+id/detPedProductoCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0" />
+
+    <Button
+        android:id="@+id/btnMasProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/btnAddProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="AGREGAR PRODUCTO" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

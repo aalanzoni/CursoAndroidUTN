@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MyResto</string>
+    <string name="tit_main_activity">Realizar Pedido</string>
+    <string name="lblNombreCliente">Nombre</string>
+    <string name="radBtnMesa">Mesa</string>
+    <string name="radBtnDelivery">Delivery</string>
+    <string name="lbIncluirPropina">Incluir Propina</string>
+    <string name="lbPermitirCancelar">Permitir Cancelar</string>
+    <string name="lbBebidaXL">Bebida XL</string>
+    <string name="lbNotificar">Notificar</string>
+    <string name="lbPagarEntrega">Pagar al Entregar</string>
+    <string name="lbPagarTCredito">Debitar</string>
+    <string name="lbConfirmar">CONFIRMAR</string>
+    <string name="lbCancelar">CANCELAR</string>
+    <string name="lblDetallePedido">Ingrese su pedido detallado</string>
+    <string name="lblNoNotificar">NOTIFICAR CONFIRMACION</string>
+</resources>
