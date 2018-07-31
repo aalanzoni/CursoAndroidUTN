@@ -11,22 +11,22 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import proy4.android.com.myresto.modelo.DetallePedido;
 import proy4.android.com.myresto.modelo.Pedido;
 import proy4.android.com.myresto.modelo.PedidoDAO;
 import proy4.android.com.myresto.modelo.PedidoDAOMemory;
+import proy4.android.com.myresto.modelo.ProductoMenu;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnConfirmar;//OK
-    private Button btnCancelar;//OK
     private Button btnAddProducto;
     private EditText txtNombre;//OK
     private EditText txtDetalle;//OK
+    private TextView tvTotalPedido;
 
     private RadioButton envioADomicilio;//OK
     private RadioButton local;//OK
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Pedido pedidoActual;
     private PedidoDAO persistencia;
+    public Double total = 0.00;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         txtNombre = (EditText) findViewById(R.id.txtNombreCliente);
         txtDetalle = (EditText)findViewById(R.id.txtDetallePedido);
+        tvTotalPedido = (TextView)findViewById(R.id.txtTotalPedido);
+        tvTotalPedido.setText("$ " + total.toString());//Inicializo en 0
 
         envioADomicilio = (RadioButton)findViewById(R.id.rbDelivery);
         bebidaXL = (CheckBox)findViewById(R.id.cbBebidaXL);
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         pagoAutomatico = (ToggleButton)findViewById(R.id.toggleButtonPagar);
 
         btnConfirmar = (Button) findViewById(R.id.btnConfirmar);
-        btnCancelar = (Button) findViewById(R.id.btnCancelar);
         btnAddProducto = (Button)findViewById(R.id.btnAddProducto);
 
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
 
             txtNombre.setText("");
             txtDetalle.setText("");
+
+            total = 0.00;
+
+            tvTotalPedido.setText("$ " + total.toString());
+
             pedidoActual = new Pedido();
             }
         });
@@ -91,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         this.btnAddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent listaMenu= new Intent(MainActivity.this,DetallePedidoActivity.class);
-                startActivity(listaMenu);
+            Intent listaMenu= new Intent(MainActivity.this,DetallePedidoActivity.class);
+            startActivityForResult(listaMenu, 999);
             }
         });
     }
@@ -101,5 +108,25 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListaPedidoActivity.class);
         intent.putExtra("PedidoDAO",(Parcelable) this.persistencia);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            if(requestCode==999){
+
+                int cantidad = data.getIntExtra("cantidad",0);
+                ProductoMenu prod= (ProductoMenu) data.getParcelableExtra("producto");
+                DetallePedido detalle = new DetallePedido();
+                detalle.setCantidad(cantidad);
+                detalle.setProductoPedido(prod);
+                pedidoActual.addItemDetalle(detalle);
+                txtDetalle.getText().append(prod.getNombre()+ " $"+ (prod.getPrecio()*cantidad)+"\r\n");
+                total += prod.getPrecio() * cantidad;
+                tvTotalPedido.setText("Total $"+total.toString());
+            }
+        }
     }
 }

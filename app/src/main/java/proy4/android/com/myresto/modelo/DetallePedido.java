@@ -5,7 +5,7 @@ public class DetallePedido {
     private ProductoMenu productoPedido;
     private int cantidad;
 
-    public DetallePedido(int id) {
+    public DetallePedido() {
         super();
     }
 

@@ -36,6 +36,10 @@
         android:hint="@string/lblDetallePedido"
         android:inputType="textMultiLine"
         android:lines="5" />
+    <TextView
+        android:id="@+id/txtTotalPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btnAddProducto"
         android:layout_width="match_parent"
