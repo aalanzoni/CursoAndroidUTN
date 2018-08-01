@@ -25,6 +25,23 @@ public class PedidoDAOMemory implements PedidoDAO, Parcelable {
     }
 
     @Override
+    public Pedido buscarPorId(Integer id) {
+        for(Pedido unPedido: REPOSITORIO_PEDIDOS){
+            if(unPedido.getId().equals(id))
+                return unPedido;
+        }
+        return null;
+    }
+
+    @Override
+    public void actualizar(Pedido pedido){
+        Pedido orig = buscarPorId(pedido.getId());
+        if (orig != null){
+            REPOSITORIO_PEDIDOS.set(REPOSITORIO_PEDIDOS.indexOf(orig), pedido);
+        }
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

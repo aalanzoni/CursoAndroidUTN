@@ -3,6 +3,7 @@ package proy4.android.com.myresto.modelo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ProductoMenu implements Parcelable{
 
     private int id;
@@ -11,17 +12,6 @@ public class ProductoMenu implements Parcelable{
 
     public ProductoMenu(){
         super();
-    }
-
-    public ProductoMenu(int id, String nombre, double precio) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
-    public ProductoMenu(String nombre, double precio) {
-        this.nombre = nombre;
-        this.precio = precio;
     }
 
     public int getId() {

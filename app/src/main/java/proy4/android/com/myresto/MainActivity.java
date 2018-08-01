@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import proy4.android.com.myresto.modelo.DetallePedido;
+import proy4.android.com.myresto.modelo.Estado;
 import proy4.android.com.myresto.modelo.Pedido;
 import proy4.android.com.myresto.modelo.PedidoDAO;
 import proy4.android.com.myresto.modelo.PedidoDAOMemory;
@@ -64,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         btnConfirmar = (Button) findViewById(R.id.btnConfirmar);
         btnAddProducto = (Button)findViewById(R.id.btnAddProducto);
 
+        if(getIntent().getExtras() != null){
+            int idPedidoSeleccionado = getIntent().getExtras().getInt("idPedido",-1);
+            if(idPedidoSeleccionado>0){
+                Toast.makeText(this, "Pedido Selected", Toast.LENGTH_SHORT).show();
+                this.loadPedido(idPedidoSeleccionado);
+            }
+        }
+
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,8 +84,12 @@ public class MainActivity extends AppCompatActivity {
             pedidoActual.setIncluyePropina(incluyePropina.isChecked());
             pedidoActual.setEnviarNotificaciones(enviarNotificacion.isChecked());
             pedidoActual.setPagoAuotomatico(pagoAutomatico.isChecked());
+            pedidoActual.setEstado(Estado.CONFIRMADO);
 
-            persistencia.agregar(pedidoActual);
+            if(getIntent().getExtras() != null)
+                persistencia.actualizar(pedidoActual);
+            else
+                persistencia.agregar(pedidoActual);
 
             muestroPedido();
 
@@ -128,5 +141,41 @@ public class MainActivity extends AppCompatActivity {
                 tvTotalPedido.setText("Total $"+total.toString());
             }
         }
+    }
+
+    private void loadPedido(int id){
+        this.pedidoActual = this.persistencia.buscarPorId(id);
+        if(this.pedidoActual == null){
+            Log.d("APP_MY_RESTO","Encontro el pedido!!!! ");
+        }
+        this.txtNombre.setText(pedidoActual.getNombre());
+        this.bebidaXL.setChecked(pedidoActual.isBebidaXL());
+
+        this.incluyePropina.setChecked(pedidoActual.isIncluyePropina());
+        this.enviarNotificacion.setChecked(pedidoActual.isEnviarNotificaciones());
+        this.permiteCancelar.setChecked(pedidoActual.isPermiteCancelar());
+
+        RadioButton rbDelivery = (RadioButton) findViewById(R.id.rbDelivery);
+        RadioButton rbMesa = (RadioButton) findViewById(R.id.rbCasa);
+
+        if(this.pedidoActual.isEnvioDomicilio()){
+            rbDelivery.setChecked(true);
+            rbMesa.setChecked(false);
+        }
+        else{
+            rbDelivery.setChecked(false);
+            rbMesa.setChecked(true);
+        }
+        this.pagoAutomatico.setChecked(this.pedidoActual.isPagoAuotomatico());
+        double totalOrden = 0.0;
+        for(DetallePedido det : this.pedidoActual.getItemsPedidos()){
+            this.txtDetalle.getText().append(
+                    det.getProductoPedido().getNombre()+ " $" +
+                            (det.getProductoPedido().getPrecio()
+                                    *
+                             det.getCantidad())+"\r\n");
+            totalOrden += det.getCantidad() * det.getProductoPedido().getPrecio();
+        }
+        this.tvTotalPedido.setText("$"+totalOrden);
     }
 }

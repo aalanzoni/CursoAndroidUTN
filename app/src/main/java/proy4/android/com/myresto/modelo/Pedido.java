@@ -17,7 +17,7 @@ public class Pedido{
     private boolean incluyePropina;
     private boolean enviarNotificaciones;
     private boolean pagoAuotomatico;
-
+    private Estado estado;
     private List<DetallePedido> itemsPedidos;
 
     private static int idGenerator = 0;
@@ -110,6 +110,14 @@ public class Pedido{
 
     public void setItemsPedidos(List<DetallePedido> itemsPedidos) {
         this.itemsPedidos = itemsPedidos;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public void addItemDetalle(DetallePedido prd){

@@ -17,9 +17,10 @@ import proy4.android.com.myresto.modelo.PedidoDAOMemory;
 public class ListaPedidoActivity extends AppCompatActivity {
 
     private PedidoDAO pedidoDAO;
-    private ArrayAdapter<Pedido> adaptadorLista;
+//    private ArrayAdapter<Pedido> adaptadorLista;
     private Button btnNuevoPedido;
     private ListView listaPedidos;
+    private PedidoAdapter adaptadorPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,12 @@ public class ListaPedidoActivity extends AppCompatActivity {
 
         this.btnNuevoPedido = (Button) findViewById(R.id.btnNuevosPedidos);
 
-        this.adaptadorLista = new ArrayAdapter<>(ListaPedidoActivity.this,android.R.layout.simple_list_item_1, pedidoDAO.listarTodos());
+        //this.adaptadorLista = new ArrayAdapter<>(ListaPedidoActivity.this,android.R.layout.simple_list_item_1, pedidoDAO.listarTodos());
+        //this.listaPedidos.setAdapter(this.adaptadorLista);
 
-        this.listaPedidos.setAdapter(this.adaptadorLista);
+        this.adaptadorPedido = new PedidoAdapter(this, pedidoDAO.listarTodos());
+
+        this.listaPedidos.setAdapter(this.adaptadorPedido);
 
         this.btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,21 +53,22 @@ public class ListaPedidoActivity extends AppCompatActivity {
             }
         });
 
+//        Borrado de Pedido seleccionado
         this.listaPedidos.setOnItemLongClickListener(
-            new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    int itemPosition = position;
-                    Pedido itemValue = (Pedido) listaPedidos.getItemAtPosition(position);
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        int itemPosition = position;
+                        Pedido itemValue = (Pedido) listaPedidos.getItemAtPosition(position);
 
-                    pedidoDAO.eliminar(itemValue);
+                        pedidoDAO.eliminar(itemValue);
 
-                    //Para actualizar el listview
-                    adaptadorLista.notifyDataSetChanged();
+                        //Para actualizar el listview
+                        adaptadorPedido.notifyDataSetChanged();
 
-                    Toast.makeText(getApplicationContext(), "Borrar elemento de posicion :"+itemPosition+ " Id: " +itemValue.getId()+ " nombre: "+itemValue.getNombre() , Toast.LENGTH_LONG).show();
-                    return false;
-                }
-            });
+                        Toast.makeText(getApplicationContext(), "Borrar elemento de posicion :" + itemPosition + " Id: " + itemValue.getId() + " nombre: " + itemValue.getNombre(), Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
         }
 }
