@@ -1,11 +1,13 @@
 package proy4.android.com.myresto;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,10 +19,12 @@ import proy4.android.com.myresto.modelo.PedidoDAOMemory;
 public class ListaPedidoActivity extends AppCompatActivity {
 
     private PedidoDAO pedidoDAO;
-//    private ArrayAdapter<Pedido> adaptadorLista;
+    //    private ArrayAdapter<Pedido> adaptadorLista;
     private Button btnNuevoPedido;
     private ListView listaPedidos;
     private PedidoAdapter adaptadorPedido;
+
+    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,8 @@ public class ListaPedidoActivity extends AppCompatActivity {
         this.btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            // cuando se hace click se debe iniciar la actividad MainActivity
-                finish( );
+                // cuando se hace click se debe iniciar la actividad MainActivity
+                finish();
             }
         });
 
@@ -70,5 +74,20 @@ public class ListaPedidoActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+        this.createNotificationChannel();
+
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "11",
+                    "canal1",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("descipcion");
+            NotificationManager notificationManager
+                    = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
+    }
 }

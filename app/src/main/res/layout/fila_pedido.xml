@@ -48,6 +48,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/btnEstado"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preparar"/>
+        <Button
             android:id="@+id/BtnVerPedido"
             android:layout_weight="1"
             android:layout_width="wrap_content"
