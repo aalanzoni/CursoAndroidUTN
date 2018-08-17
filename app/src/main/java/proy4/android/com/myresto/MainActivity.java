@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
             pedidoActual.setPagoAuotomatico(pagoAutomatico.isChecked());
             pedidoActual.setEstado(Estado.CONFIRMADO);
 
-            if(getIntent().getExtras() != null)
-                persistencia.actualizar(pedidoActual);
-            else
-                persistencia.agregar(pedidoActual);
+            persistencia.agregar(pedidoActual);
 
-            muestroPedido();
+            Log.d("@MAIN, pedidos: ", persistencia.listarTodos().toString());
+            Intent intent = new Intent(MainActivity.this,ListaPedidoActivity.class);
+//            intent.putExtra("persistencia", (Parcelable) persistencia);
+            startActivity(intent);
 
             Toast.makeText(MainActivity.this,"Pedido creado", Toast.LENGTH_LONG).show();
             Log.d("APP_MY_RESTO","Pedido confirmado!!!! ");
@@ -115,12 +115,6 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(listaMenu, 999);
             }
         });
-    }
-
-    private void muestroPedido(){
-        Intent intent = new Intent(this, ListaPedidoActivity.class);
-        intent.putExtra("PedidoDAO",(Parcelable) this.persistencia);
-        startActivity(intent);
     }
 
     @Override

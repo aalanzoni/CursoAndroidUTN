@@ -55,15 +55,18 @@ public class DetallePedidoActivity extends AppCompatActivity {
 
         this.productoDao.cargarDatos(listaProductos);
 
-        this.adaptadorLista = new ArrayAdapter<>(DetallePedidoActivity.this,android.R.layout.simple_list_item_1, this.productoDao.listarMenu());
+        this.adaptadorLista = new ArrayAdapter<>(DetallePedidoActivity.this,android.R.layout.simple_list_item_single_choice, this.productoDao.listarMenu());
+
         this.listaMenu.setAdapter(this.adaptadorLista);
+
+        this.listaMenu.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         this.listaMenu.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent,
                                     View view, int position, long id) {
 
-            productoElegido = (ProductoMenu) listaMenu.getItemAtPosition(position);
+            productoElegido = adaptadorLista.getItem(position);
             }
 
         });

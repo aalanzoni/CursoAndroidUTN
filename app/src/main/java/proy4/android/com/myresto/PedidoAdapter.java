@@ -63,6 +63,17 @@ public class PedidoAdapter extends ArrayAdapter {
         else{
             imgPropina.setImageResource(android.R.drawable.btn_star_big_off);
         }
+
+        btnVer.setTag(pedido);
+        btnVer.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+            int idPedido = ((Pedido) v.getTag()).getId();
+            Intent intentDetalle = new Intent(context,MainActivity.class);
+            intentDetalle.putExtra("idPedido",idPedido);
+            context.startActivity(intentDetalle);
+            }
+        });
+
         switch (pedido.getEstado()){
             case CONFIRMADO:
                 btnEstado.setText("Preparar");
@@ -81,22 +92,14 @@ public class PedidoAdapter extends ArrayAdapter {
                 btnEstado.setEnabled(false);
                 break;
         }
-        btnVer.setTag(pedido);
-        btnVer.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-            int idPedido = ((Pedido) v.getTag()).getId();
-            Intent intentDetalle = new Intent(context,MainActivity.class);
-            intentDetalle.putExtra("idPedido",idPedido);
-            context.startActivity(intentDetalle);
-            }
-        });
 
+        btnEstado.setTag(pedido);
         btnEstado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (pedido.getEstado()){
+                    switch (pedido.getEstado()){
                     case CONFIRMADO:
-//                      p.preparar();
+                        pedido.preparar();
                         ((Button) v).setText("Preparando....");
                         ((Button) v).setEnabled(false);
                         Runnable r = new Runnable() {

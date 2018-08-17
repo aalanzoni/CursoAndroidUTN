@@ -4,10 +4,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -19,12 +22,9 @@ import proy4.android.com.myresto.modelo.PedidoDAOMemory;
 public class ListaPedidoActivity extends AppCompatActivity {
 
     private PedidoDAO pedidoDAO;
-    //    private ArrayAdapter<Pedido> adaptadorLista;
     private Button btnNuevoPedido;
     private ListView listaPedidos;
     private PedidoAdapter adaptadorPedido;
-
-    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,16 @@ public class ListaPedidoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_lista_pedido);
 
+        this.createNotificationChannel();
+
+//        Intent intent = getIntent();
+
         this.pedidoDAO = new PedidoDAOMemory();
 
-        final Intent intent = getIntent();
+        Log.d("@ListaPedido", pedidoDAO.listarTodos().toString());
 
-        this.pedidoDAO = intent.getParcelableExtra("PedidoDAO");
+
+        Log.d("VER ACA: ",this.pedidoDAO.toString());
 
         this.listaPedidos = (ListView) findViewById(R.id.listaPedidos);
 
@@ -52,8 +57,12 @@ public class ListaPedidoActivity extends AppCompatActivity {
         this.btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // cuando se hace click se debe iniciar la actividad MainActivity
-                finish();
+            // cuando se hace click se debe iniciar la actividad MainActivity
+            Intent intent = new Intent(ListaPedidoActivity.this,MainActivity.class);
+            intent.putExtra("persistencia", (Parcelable) pedidoDAO);
+            startActivity(intent);
+//                finish();
+
             }
         });
 
@@ -62,26 +71,24 @@ public class ListaPedidoActivity extends AppCompatActivity {
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        int itemPosition = position;
-                        Pedido itemValue = (Pedido) listaPedidos.getItemAtPosition(position);
+                    int itemPosition = position;
+                    Pedido itemValue = (Pedido) listaPedidos.getItemAtPosition(position);
 
-                        pedidoDAO.eliminar(itemValue);
+                    pedidoDAO.eliminar(itemValue);
 
-                        //Para actualizar el listview
-                        adaptadorPedido.notifyDataSetChanged();
+                    //Para actualizar el listview
+                    adaptadorPedido.notifyDataSetChanged();
 
-                        Toast.makeText(getApplicationContext(), "Borrar elemento de posicion :" + itemPosition + " Id: " + itemValue.getId() + " nombre: " + itemValue.getNombre(), Toast.LENGTH_LONG).show();
-                        return false;
-                    }
-                });
-        this.createNotificationChannel();
-
-    }
+                    Toast.makeText(getApplicationContext(), "Borrar elemento de posicion :" + itemPosition + " Id: " + itemValue.getId() + " nombre: " + itemValue.getNombre(), Toast.LENGTH_LONG).show();
+                    return false;
+                }
+        });
+        }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
-                    "11",
+                    "1",
                     "canal1",
                     NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("descipcion");
